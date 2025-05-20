@@ -37,7 +37,7 @@ class LibraryController extends Controller
             'library' => $library,
             "books" => Book::where("directory_id", "=", $directory)->orderBy("name")->get(),
 
-            "directories" => \App\Directory::where("directory_id", "=", $directory)->where("library_id", $library->id)->orderBy("path")->paginate(24)->appends(request()->query()),
+            "directories" => \App\Directory::where("directory_id", "=", $directory)->where("library_id", $library->id)->get(),
 
         ]);
     }
