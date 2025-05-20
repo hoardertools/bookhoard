@@ -1,0 +1,36 @@
+name: bookhoard
+
+services:
+  pgsql:
+    image: postgres:17.2-bookworm
+    container_name: bookhoard_pqsql
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_DB: podhoard
+    volumes:
+      - pgsql_data:/var/lib/postgresql/data # Persistent storage for PostgreSQL database
+
+  app:
+    image: ghcr.io/hoardertools/bookhoard:latest
+    restart: unless-stopped
+    depends_on:
+      - pgsql
+    container_name: bookhoardd_app
+    ports:
+      - "8123:80"
+    environment:
+      APP_URL: http://my.bookhoard.domain
+      POSTGRES_HOST: pgsql
+      POSTGRES_DB: bookhoard
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: changeme
+    volumes:
+      - app_config:/app/config # Persistent storage for app configuration
+      # - /bookhoard:/bookhoard # Example: Mount a directory containing books
+    links:
+      - pgsql
+
+volumes:
+  pgsql_data:
+  app_config:

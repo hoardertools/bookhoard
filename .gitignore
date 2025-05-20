@@ -1,0 +1,9 @@
+.env
+vendor/
+node_modules/
+public/storage
+storage/framekwork/cache/*
+storage/framekwork/sessions/*
+storage/framekwork/views/*
+storage/logs/*
+.idea/

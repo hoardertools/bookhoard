@@ -1,0 +1,74 @@
+@extends('layouts.default')
+
+@section('title', 'Manage Users')
+
+@section('content')
+	<!-- begin breadcrumb -->
+
+	<!-- end breadcrumb -->
+	<!-- begin page-header -->
+	<h1 class="page-header">Manage Users</h1>
+	<!-- end page-header -->
+
+	<!-- begin panel -->
+	<div class="panel panel-inverse">
+		<div class="panel-heading">
+			<h4 class="panel-title">Existing Users</h4>
+			<div class="panel-heading-btn">
+				<a href="/manage/users/create" class="btn btn-xs  btn-primary">Add User</a>
+			</div>
+		</div>
+		<div class="panel-body">
+			@if(session('status'))
+				<div class="alert alert-success alert-dismissible" id="sectionAlert">
+
+					<li>{{session('status')}}</li>
+
+				</div>
+			@endif
+			<table id="data-table-users" class="table table-striped table-responsive table-striped">
+				<thead>
+				<tr>
+					<th>Name</th>
+					<th>Email (Username)</th>
+					<th>Actions</th>
+				</tr>
+				</thead>
+				<tbody>
+				@foreach($users as $user)
+					<tr>
+						<td>{{$user->name}}</td>
+						<td>{{$user->email}}</td>
+						<td>
+							<a href="/manage/users/{{$user->id}}/edit" class="btn btn-xs btn-primary">Edit</a>
+							<a href="/manage/users/{{$user->id}}/delete" class="btn btn-xs btn-danger" onclick="return confirm('Are you sure you want to remove this user?')">Remove</a>
+						</td>
+					</tr>
+				@endforeach
+				</tbody>
+			</table>
+
+			@section('js')
+				<!-- script -->
+				<link href="/v2/assets/plugins/datatables.net-bs5/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
+				<link href="/v2/assets/plugins/datatables.net-responsive-bs5/css/responsive.bootstrap5.min.css" rel="stylesheet" />
+				<script src="/v2/assets/plugins/datatables.net/js/jquery.dataTables.min.js"></script>
+				<script src="/v2/assets/plugins/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+				<script src="/v2/assets/plugins/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+				<script src="/v2/assets/plugins/datatables.net-responsive-bs5/js/responsive.bootstrap5.min.js"></script>
+				<script>
+					$('#data-table-users').DataTable({
+						responsive: true,
+					});
+					@if(isset($tableSorting))
+					var table = $('#data-table-users').DataTable();
+					var order = table.order( [{{$tableSorting[0]}}, "{{$tableSorting[1]}}" ] ).draw();
+					@endif
+
+				</script>
+			@endsection
+
+		</div>
+	</div>
+	<!-- end panel -->
+@endsection
