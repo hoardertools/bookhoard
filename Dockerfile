@@ -35,6 +35,7 @@ RUN apt-get -qq update \
     exiftool \
     cron \
     libpq-dev \
+    p7zip-full \
     libzip-dev \
     libmagickwand-dev \
     libonig-dev \
