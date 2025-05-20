@@ -36,6 +36,7 @@ RUN apt-get -qq update \
     cron \
     libpq-dev \
     libzip-dev \
+    libmagickwand-dev \
     libonig-dev \
     git \
     zip \
@@ -45,6 +46,7 @@ RUN apt-get -qq update \
     libxslt-dev \
     supervisor
 
+RUN pecl install imagick
 RUN docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql && docker-php-ext-install pgsql
 RUN docker-php-ext-configure pdo_pgsql && docker-php-ext-install pdo_pgsql
 RUN docker-php-ext-configure bcmath && docker-php-ext-install bcmath
@@ -52,7 +54,7 @@ RUN docker-php-ext-configure opcache && docker-php-ext-install opcache
 RUN docker-php-ext-configure intl && docker-php-ext-install intl
 RUN docker-php-ext-configure xsl && docker-php-ext-install xsl
 RUN docker-php-ext-configure zip && docker-php-ext-install zip
-RUN docker-php-ext-configure imagick && docker-php-ext-install imagick
+RUN docker-php-ext-enable imagick
 RUN docker-php-ext-configure fileinfo && docker-php-ext-install fileinfo
 
 RUN sed -i \
