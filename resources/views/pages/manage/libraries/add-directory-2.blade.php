@@ -124,7 +124,7 @@
 			const regex = document.getElementById('regex').value;
 			//Set "regex" input field value to the regex value
 			document.getElementById('regex2').value = regex;
-			const response = await fetch('{{ route('regex.parse') }}', {
+			const response = await fetch('/regex/parse', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
