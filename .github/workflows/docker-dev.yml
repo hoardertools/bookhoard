@@ -51,8 +51,8 @@ jobs:
           provenance: false
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
-          tags: ghcr.io/hoardertools/podhoard:latest
-          labels: ghcr.io/hoardertools/podhoard:latest
+          tags: ghcr.io/hoardertools/bookhoard:latest
+          labels: ghcr.io/hoardertools/bookhoard:latest
 
       # Temp fix
       # https://github.com/docker/build-push-action/issues/252
