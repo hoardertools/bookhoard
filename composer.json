@@ -7,8 +7,8 @@
     "require": {
         "php": "^8.2",
         "goncziakos/podcast-feed": "^1.1",
+        "hoardertools/php-ebook": "dev-main as 1.0",
         "kiwilan/php-audio": "^4.0",
-        "kiwilan/php-ebook": "^3.0",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "lywzx/php-epub": "^0.1.2",
@@ -22,6 +22,12 @@
         "nunomaduro/collision": "^8.0",
         "phpunit/phpunit": "^11.0.1"
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/hoardertools/php-ebook"
+        }
+    ],
     "autoload": {
         "psr-4": {
             "App\\": "app/",

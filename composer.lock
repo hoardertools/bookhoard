@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "36fb6aea0bf2dac6ddc26eb50f301370",
+    "content-hash": "a2108f326b39046fe1c37bd06e2814f5",
     "packages": [
         {
             "name": "azjezz/psl",
@@ -1230,6 +1230,116 @@
             "time": "2023-12-03T19:50:20+00:00"
         },
         {
+            "name": "hoardertools/php-ebook",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hoardertools/php-ebook.git",
+                "reference": "4109e898d91e6a61a47a70b71799ac5414158873"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hoardertools/php-ebook/zipball/4109e898d91e6a61a47a70b71799ac5414158873",
+                "reference": "4109e898d91e6a61a47a70b71799ac5414158873",
+                "shasum": ""
+            },
+            "require": {
+                "kiwilan/php-archive": "^2.3.01",
+                "kiwilan/php-xml-reader": "^1.1.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "kiwilan/php-audio": "^4.0.01",
+                "laravel/pint": "^1.7",
+                "pestphp/pest": "^2.0",
+                "phpstan/phpstan": "^1.10",
+                "spatie/ray": "^1.28"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Kiwilan\\Ebook\\": "src"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Kiwilan\\Ebook\\Tests\\": "tests"
+                }
+            },
+            "scripts": {
+                "test": [
+                    "vendor/bin/pest"
+                ],
+                "test-filter": [
+                    "vendor/bin/pest --filter"
+                ],
+                "test-parallel": [
+                    "vendor/bin/pest --parallel --coverage"
+                ],
+                "test-coverage": [
+                    "vendor/bin/pest --coverage --min=90"
+                ],
+                "test-coverage-parallel": [
+                    "vendor/bin/pest --parallel --coverage"
+                ],
+                "analyse": [
+                    "vendor/bin/phpstan analyse"
+                ],
+                "format": [
+                    "vendor/bin/pint"
+                ]
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ewilan Rivière",
+                    "email": "ewilan.riviere@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "PHP package to read metadata and extract covers from eBooks, comics and audiobooks.",
+            "homepage": "https://github.com/hoardertools/php-ebook",
+            "keywords": [
+                "audiobook",
+                "azw",
+                "azw3",
+                "book",
+                "calibre",
+                "cb7",
+                "cba",
+                "cbam",
+                "cbr",
+                "cbt",
+                "cbz",
+                "comic",
+                "comicinfo",
+                "cover",
+                "ebook",
+                "epub",
+                "epub2",
+                "epub3",
+                "fb2",
+                "metadata",
+                "mobi",
+                "opf",
+                "pdf",
+                "php"
+            ],
+            "support": {
+                "source": "https://github.com/hoardertools/php-ebook/tree/1.0"
+            },
+            "funding": [
+                {
+                    "type": "github",
+                    "url": "https://github.com/kiwilan"
+                }
+            ],
+            "time": "2025-05-21T09:45:13+00:00"
+        },
+        {
             "name": "james-heinrich/getid3",
             "version": "v1.9.23",
             "source": {
@@ -1455,89 +1565,6 @@
                 }
             ],
             "time": "2024-10-03T16:57:29+00:00"
-        },
-        {
-            "name": "kiwilan/php-ebook",
-            "version": "3.0.04",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kiwilan/php-ebook.git",
-                "reference": "18997c10ca559f478886f02ab9635fe33f9cb0a1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kiwilan/php-ebook/zipball/18997c10ca559f478886f02ab9635fe33f9cb0a1",
-                "reference": "18997c10ca559f478886f02ab9635fe33f9cb0a1",
-                "shasum": ""
-            },
-            "require": {
-                "kiwilan/php-archive": "^2.3.01",
-                "kiwilan/php-xml-reader": "^1.1.0",
-                "php": "^8.1"
-            },
-            "require-dev": {
-                "kiwilan/php-audio": "^4.0.01",
-                "laravel/pint": "^1.7",
-                "pestphp/pest": "^2.0",
-                "phpstan/phpstan": "^1.10",
-                "spatie/ray": "^1.28"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Kiwilan\\Ebook\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Ewilan Rivière",
-                    "email": "ewilan.riviere@gmail.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "PHP package to read metadata and extract covers from eBooks, comics and audiobooks.",
-            "homepage": "https://github.com/kiwilan/php-ebook",
-            "keywords": [
-                "CBA",
-                "audiobook",
-                "azw",
-                "azw3",
-                "book",
-                "calibre",
-                "cb7",
-                "cbam",
-                "cbr",
-                "cbt",
-                "cbz",
-                "comic",
-                "comicinfo",
-                "cover",
-                "ebook",
-                "epub",
-                "epub2",
-                "epub3",
-                "fb2",
-                "metadata",
-                "mobi",
-                "opf",
-                "pdf",
-                "php"
-            ],
-            "support": {
-                "issues": "https://github.com/kiwilan/php-ebook/issues",
-                "source": "https://github.com/kiwilan/php-ebook/tree/v3.0.04"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/kiwilan",
-                    "type": "github"
-                }
-            ],
-            "time": "2025-02-19T08:55:45+00:00"
         },
         {
             "name": "kiwilan/php-xml-reader",
@@ -9111,9 +9138,18 @@
             "time": "2024-03-03T12:36:25+00:00"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "hoardertools/php-ebook",
+            "version": "dev-main",
+            "alias": "1.0",
+            "alias_normalized": "1.0.0.0"
+        }
+    ],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "hoardertools/php-ebook": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

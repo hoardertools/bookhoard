@@ -17,7 +17,7 @@ class SetMetaDataClass
 
 
             try{
-                $epubParser = Ebook::read($book->path);
+                $epubParser = Ebook::read($book->path, true);
                 $meta["series"] = $epubParser->getSeries();
                 $meta["issue"] = $epubParser->getVolume();
                 $meta["title"] = $epubParser->getTitle();
