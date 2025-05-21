@@ -38,7 +38,7 @@ class BookManager
             $book = new Book();
             $book->name = pathinfo($file, PATHINFO_FILENAME);
             $book->path = $file;
-            $book->directory_id = $directory->directory_id;
+            $book->directory_id = $directory->id;
             $book->library_id = $directory->library_id;
             $book->metadata_set = false;
             $book->created_at = now();
