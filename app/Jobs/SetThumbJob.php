@@ -23,7 +23,7 @@ class SetThumbJob implements ShouldQueue
     public function handle(): void
     {
 
-        foreach(Book::where("has_image", "=", false)->where("thumbnail_generation_tried", "=", false)->take(100)->get() as $book){
+        foreach(Book::where("has_image", "=", false)->where("has_image_been_tried", "=", false)->take(100)->get() as $book){
 
             $epubParser = Ebook::read($book->path);
             $book->has_image_been_tried = true;
@@ -50,7 +50,7 @@ class SetThumbJob implements ShouldQueue
 
         }
 
-        if(Book::where("has_image", "=", false)->where("thumbnail_generation_tried", "=", false)->exists()) {
+        if(Book::where("has_image", "=", false)->where("has_image_been_tried", "=", false)->exists()) {
             SetThumbJob::dispatch();
             return;
         }
