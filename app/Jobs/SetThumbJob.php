@@ -25,7 +25,19 @@ class SetThumbJob implements ShouldQueue
 
         foreach(Book::where("has_image", "=", false)->where("has_image_been_tried", "=", false)->take(100)->get() as $book){
 
-            $epubParser = Ebook::read($book->path);
+            try{
+                $epubParser = Ebook::read($book->path);
+            }catch (\ErrorException $e){
+                \Log::error("Error reading file: " . $book->path . " - " . $e->getMessage());
+                $book->has_image_been_tried = true;
+                $book->save();
+                continue;
+            }catch (\Exception $e){
+                \Log::error("Error reading file: " . $book->path . " - " . $e->getMessage());
+                $book->has_image_been_tried = true;
+                $book->save();
+                continue;
+            }
             $book->has_image_been_tried = true;
             if($epubParser->hasCover()) {
                 $book->has_image = true;
