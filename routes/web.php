@@ -47,7 +47,13 @@ Route::get('/getRssPodcastCover/{id}/{key}', function (Request $request, $id, $k
 
 //Read permissions
 Route::middleware(['verifyReadPermissions'])->group(function () {
-
+    Route::get('/api/books/{book}/details', function (\App\Book $book) {
+        return response()->json([
+            'series' => $book->series,  // Assume eager loaded or lazy
+            'issue' => $book->issue,
+            'title' => $book->title,
+        ]);
+    });
     Route::get('/', 'MainController@home')->name('home');
 
     Route::get('/library/{slug}', 'LibraryController@showLibrary');

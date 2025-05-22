@@ -49,7 +49,7 @@ class BookManager
             }else{
                 $book->save();
                 Log::log("Book added: " . $book->name,  "Book", "info");
-                SetInitialMetaDataJob::dispatch($directory->library);
+                SetInitialMetaDataJob::dispatch($directory->library)->onQueue('metadata');
             }
 
         }

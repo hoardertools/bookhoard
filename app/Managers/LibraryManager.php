@@ -24,7 +24,7 @@ class LibraryManager
 
         }
 
-        SetInitialMetaDataJob::dispatch($this->library);
+        SetInitialMetaDataJob::dispatch($this->library)->onQueue('metadata');
 
         return true;
     }

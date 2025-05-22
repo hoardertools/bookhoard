@@ -32,7 +32,6 @@ class LibraryController extends Controller
 
         $library = Library::where("slug", $slug)->orderBy("name", "ASC")->first();
 
-
         return view('pages.library', [
             'library' => $library,
             "books" => Book::where("directory_id", "=", $directory)->orderBy("name")->get(),
@@ -40,6 +39,7 @@ class LibraryController extends Controller
             "directories" => \App\Directory::where("directory_id", "=", $directory)->where("library_id", $library->id)->get(),
 
         ]);
+
     }
 
 

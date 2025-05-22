@@ -32,14 +32,22 @@ class Book extends Model
         ];
     }
 
-    public function getEpisodeName()
+    public function getSeriesAttribute()
     {
-        if(strlen($this->title) > 0){
-            return $this->title;
-        }else{
-            return $this->filename;
-        }
+        return $this->metadata()->where("key", "=", "series")->first()->value;
 
-     }
+    }
+
+    public function getIssueAttribute()
+    {
+        return $this->metadata()->where("key", "=", "issue")->first()->value;
+
+    }
+
+    public function getTitleAttribute()
+    {
+        return $this->metadata()->where("key", "=", "title")->first()->value;
+
+    }
 
 }

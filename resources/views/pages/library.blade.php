@@ -75,11 +75,11 @@
 							</thead>
 							<tbody>
 							@foreach($books as $book)
-								<tr>
-									<td><a href="/library/{{$library->slug}}/directory/{{$directory->id}}/book/{{$book->id}}">{{$book->name}}</a></td>
-									<td>{{$book->series}}</td>
-									<td>{{$book->issue}}</td>
-									<td></td>
+								<tr data-book-id="{{ $book->id }}">
+									<td><a href="/library/{{$library->slug}}/directory/{{$book->directory_id}}/book/{{$book->id}}">{{$book->name}}</a></td>
+									<td class="series"></td>
+									<td class="issue"></td>
+									<td class="title"></td>
 								</tr>
 							@endforeach
 							</tbody>
@@ -128,12 +128,31 @@
 			responsive: true,
 			pageLength: 25
 		});
+
 		$('#data-table-books').DataTable({
 			responsive: true,
-			pageLength: 25
+			pageLength: 25,
+			drawCallback: function () {
+				// Loop through each row after table is drawn
+				$('#data-table-books tbody tr').each(function () {
+					const $row = $(this);
+					const bookId = $row.data('book-id');
+
+					// AJAX call to fetch extra book data
+					$.ajax({
+						url: `/api/books/${bookId}/details`,
+						method: 'GET',
+						success: function (data) {
+							$row.find('.series').text(data.series);
+							$row.find('.issue').text(data.issue);
+							$row.find('.title').text(data.title);
+						},
+						error: function () {
+							$row.find('.series, .issue, .title').text('');
+						}
+					});
+				});
+			}
 		});
-
-
-
 	</script>
 @endpush

@@ -63,7 +63,7 @@ class SetThumbJob implements ShouldQueue
         }
 
         if(Book::where("has_image", "=", false)->where("has_image_been_tried", "=", false)->exists()) {
-            SetThumbJob::dispatch();
+            SetThumbJob::dispatch()->onQueue('image');
             return;
         }
 

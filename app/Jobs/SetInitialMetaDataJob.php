@@ -55,13 +55,13 @@ class SetInitialMetaDataJob implements ShouldQueue
 
 
         if($this->library->books()->where("metadata_set", "=", false)->exists()) {
-            SetInitialMetaDataJob::dispatch($this->library);
+            SetInitialMetaDataJob::dispatch($this->library)->onQueue('metadata');
             return;
         }
 
         Log::log("Finished setting metadata for library: " . $this->library->id, "Set Metadata", "info");
 
-        SetThumbJob::dispatch();
+        SetThumbJob::dispatch()->onQueue('image');
 
     }
 }

@@ -73,7 +73,7 @@ class DirectoryManager
             }
 
         }
-        SetInitialMetaDataJob::dispatch($this->directory->library);
+        SetInitialMetaDataJob::dispatch($this->directory->library)->onQueue('metadata');
         return true;
 
 
