@@ -49,7 +49,7 @@ Route::get('/getRssPodcastCover/{id}/{key}', function (Request $request, $id, $k
 Route::middleware(['verifyReadPermissions'])->group(function () {
     Route::get('/api/books/{book}/details', function (\App\Book $book) {
         return response()->json([
-            'series' => $book->series,  // Assume eager loaded or lazy
+            'series' => $book->series,
             'issue' => $book->issue,
             'title' => $book->title,
         ]);

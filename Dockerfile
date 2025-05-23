@@ -78,6 +78,7 @@ RUN cd /bookhoard; php composer.phar install \
 ADD ./docker/entrypoint.sh /entrypoint.sh
 ADD ./docker/docker-conf/nginx.conf /etc/nginx/nginx.conf
 ADD ./docker/docker-conf/supervisord.conf /etc/supervisord.conf
+ADD ./docker/docker-conf/policy.xml /etc/ImageMagick-6/policy.xml
 
 RUN git config --global --add safe.directory /bookhoard
 
