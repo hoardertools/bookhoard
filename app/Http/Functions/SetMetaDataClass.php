@@ -43,7 +43,7 @@ class SetMetaDataClass
                 //Check if the book's directory has a regex, if so, parse it and use any groups as metadata
                 $regex = $book->directory->regex;
                 if($regex){
-                    preg_match($regex, basename($book->path), $matches);
+                    preg_match($regex, pathinfo(basename($book->path), PATHINFO_FILENAME), $matches);
                     if(count($matches) > 0){
                         foreach($matches as $key => $value){
                             if($key == 0){

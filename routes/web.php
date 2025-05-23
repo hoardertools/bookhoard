@@ -58,6 +58,7 @@ Route::middleware(['verifyReadPermissions'])->group(function () {
 
     Route::get('/library/{slug}', 'LibraryController@showLibrary');
     Route::get('/library/{slug}/directory/{directoryId}', 'LibraryController@showLibrary');
+    Route::get('/library/{slug}/directory/{directoryId}/book/{bookId}', 'LibraryController@showBook');
 
     Route::get('/profile', 'ProfileController@profile')->name('profile');
     Route::post('/profile', 'ProfileController@updateProfile');
