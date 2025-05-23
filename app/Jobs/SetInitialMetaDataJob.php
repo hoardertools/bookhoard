@@ -30,7 +30,7 @@ class SetInitialMetaDataJob implements ShouldQueue
         $metaData = [];
 
 
-        foreach($this->library->books()->where("metadata_set", "=", false)->take(1000)->get() as $book) {
+        foreach($this->library->books()->where("metadata_set", "=", false)->take(100)->get() as $book) {
 
             $metadataManager = new MetadataManager($book);
             $metaObject = $metadataManager->setDbMetaData();
