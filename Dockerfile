@@ -43,6 +43,7 @@ RUN apt-get -qq update \
     zip \
     p7zip \
     unzip \
+    unrar-free \
     libicu-dev\
     libxslt-dev \
     supervisor
@@ -58,10 +59,18 @@ RUN docker-php-ext-configure zip && docker-php-ext-install zip
 RUN docker-php-ext-enable imagick
 RUN docker-php-ext-configure fileinfo && docker-php-ext-install fileinfo
 
+RUN cd ~
+RUN git clone https://github.com/cataphract/php-rar
+RUN cd php-rar
+RUN phpize
+RUN ./configure
+RUN make
+RUN make install
 RUN sed -i \
         -e "s/;listen.mode = 0660/listen.mode = 0666/g" \
         -e "s/listen = 127.0.0.1:9000/listen = \/var\/run\/php-fpm.sock/g" \
         /usr/local/etc/php-fpm.d/www.conf
+RUN echo "extension=rar.so" >> /usr/local/etc/php/php.ini-production
 
 RUN cd /bookhoard; php composer.phar install \
   # Cleanup
@@ -81,6 +90,10 @@ ADD ./docker/docker-conf/supervisord.conf /etc/supervisord.conf
 ADD ./docker/docker-conf/policy.xml /etc/ImageMagick-6/policy.xml
 
 RUN git config --global --add safe.directory /bookhoard
+RUN curl --output /tmp/rar.deb http://ftp.debian.org/debian/pool/non-free/r/rar/rar_6.23-1~deb12u1_amd64.deb
+RUN dpkg --install /tmp/rar.deb \
+  && rm /tmp/rar.deb
+
 
 RUN chmod +x /entrypoint.sh
 
