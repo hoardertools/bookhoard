@@ -43,5 +43,13 @@ class LibraryController extends Controller
     }
 
 
+    public function showBook($slug, \App\Directory $directory, Book $book){
+
+        return view('pages.book', [
+            'book' => $book,
+            'directory' => $directory,
+           ]);
+
+    }
 
 }

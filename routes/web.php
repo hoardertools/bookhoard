@@ -58,7 +58,19 @@ Route::middleware(['verifyReadPermissions'])->group(function () {
 
     Route::get('/library/{slug}', 'LibraryController@showLibrary');
     Route::get('/library/{slug}/directory/{directoryId}', 'LibraryController@showLibrary');
-    Route::get('/library/{slug}/directory/{directoryId}/book/{bookId}', 'LibraryController@showBook');
+    Route::get('/library/{slug}/directory/{directory}/book/{book}', 'LibraryController@showBook');
+
+    // /getComic/id to download the file to the browser
+    Route::get("/getComic/{id}", function ($id) {
+
+        $book = \App\Book::findOrFail($id);
+
+
+        return response()->download( $book->path);
+
+    })->name('getComic');
+
+
 
     Route::get('/profile', 'ProfileController@profile')->name('profile');
     Route::post('/profile', 'ProfileController@updateProfile');

@@ -50,4 +50,27 @@ class Book extends Model
 
     }
 
+    public function otherMeta()
+    {
+        return $this->metadata()->whereNotIn("key", ["series", "issue", "title"])->get();
+    }
+    public function image(): HasOne
+    {
+        return $this->hasOne(Image::class, 'id', 'image_id');
+    }
+
+    public function renderImage(){
+
+
+        $image = $this->image()->first();
+
+        if($image->base64) {
+
+             return '<img src="data:image/png;base64,' . $image->base64 . '" alt="' . $this->title . '" class="img-fluid" style="max-width: 100%;">';
+        }
+
+        return "";
+
+    }
+
 }
