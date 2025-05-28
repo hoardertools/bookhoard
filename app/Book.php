@@ -34,19 +34,19 @@ class Book extends Model
 
     public function getSeriesAttribute()
     {
-        return $this->metadata()->where("key", "=", "series")->first()->value;
+        return $this->metadata()->where("key", "=", "series")->first()->value ?? "";
 
     }
 
     public function getIssueAttribute()
     {
-        return $this->metadata()->where("key", "=", "issue")->first()->value;
+        return $this->metadata()->where("key", "=", "issue")->first()->value ?? "";
 
     }
 
     public function getTitleAttribute()
     {
-        return $this->metadata()->where("key", "=", "title")->first()->value;
+        return $this->metadata()->where("key", "=", "title")->first()->value ?? "";
 
     }
 
