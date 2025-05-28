@@ -49,7 +49,7 @@
 
 
 					@endphp
-					<button class="btn btn-primary"><b>Size: {{$size}}</b></button>&nbsp; - <a href="/getComic/{{$book->id}}" class="btn btn-sm btn-success"><b>Download</b></a>&nbsp;
+					<button class="btn btn-primary"><b>Size: {{$size ?? "File currently not found"}}</b></button>&nbsp; - <a href="/getComic/{{$book->id}}" class="btn btn-sm btn-success"><b>Download</b></a>&nbsp;
 				</div><br>
 				<table class="table table-responsive-sm table-striped">
 					<tbody>
@@ -70,13 +70,15 @@
 						<td>{{$book->issue ?? "-"}}</td>
 					</tr>
 					@foreach($book->otherMeta() as $meta)
-						@if($meta->type->type != "creator")
-							@if($meta->type->type != "title")
+						@if($meta->key != "title")
+							@if($meta->key != "series")
+								@if($meta->key != "issue")
 								<tr>
-									<td>{{ucfirst($meta->type->type)}}</td>
+									<td>{{ucfirst($meta->key)}}</td>
 									<td>{{$meta->value}}</td>
 								</tr>
 							@endif
+								@endif
 						@endif
 					@endforeach
 					</tbody>
