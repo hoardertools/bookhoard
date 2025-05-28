@@ -32,15 +32,18 @@ class SetThumbJob implements ShouldQueue
                 $path = escapeshellarg($book->path);
                 exec("unrar-free --list " . $path, $files);
                 sort($files);
+                echo "Processing CBR file: " . $book->path . "\n";
                 foreach($files as $fil){
+                    echo "Found file: " . $fil . "\n";
                     if(str_ends_with(strtolower($fil), ".png") || str_ends_with(strtolower($fil), ".jpg") || str_ends_with(strtolower($fil), ".jpeg")
                         || str_ends_with(strtolower($fil), ".bmp")  || str_ends_with(strtolower($fil), ".gif")){
-                        $fileToExport = $fil;
+                        $fileToExport = trim($fil);
                         break;
                     }
                 }
-                if(isset($fileToExport)){
 
+                if(isset($fileToExport)){
+                    echo "File to export: " . $fileToExport . "\n";
                     $escapedFileToExport = escapeshellarg($fileToExport);
                     exec("unrar-free --extract $path  $escapedFileToExport /tmp", $output, $returnCode);
 

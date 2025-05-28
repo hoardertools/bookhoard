@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\ScheduleThumbCheck;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,6 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
+        ScheduleThumbCheck::class
     ];
 
     /**
@@ -23,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-
+        $schedule->command('app:schedule-thumb-check')->hourly();
     }
 
     /**
