@@ -25,39 +25,77 @@ class SetThumbJob implements ShouldQueue
 
         foreach(Book::where("has_image", "=", false)->where("has_image_been_tried", "=", false)->take(100)->get() as $book){
 
-            try{
-                $epubParser = Ebook::read($book->path);
-            }catch (\ErrorException $e){
-                \Log::error("Error reading file: " . $book->path . " - " . $e->getMessage());
+            if(str_ends_with(strtolower($book->path), ".cbr")){
                 $book->has_image_been_tried = true;
                 $book->save();
-                continue;
-            }catch (\Exception $e){
-                \Log::error("Error reading file: " . $book->path . " - " . $e->getMessage());
+
+                $path = escapeshellarg($book->path);
+                exec("unrar-free --list " . $path, $files);
+                sort($files);
+                foreach($files as $fil){
+                    if(str_ends_with(strtolower($fil), ".png") || str_ends_with(strtolower($fil), ".jpg") || str_ends_with(strtolower($fil), ".jpeg")
+                        || str_ends_with(strtolower($fil), ".bmp")  || str_ends_with(strtolower($fil), ".gif")){
+                        $fileToExport = $fil;
+                        break;
+                    }
+                }
+                if(isset($fileToExport)){
+
+                    $escapedFileToExport = escapeshellarg($fileToExport);
+                    exec("unrar-free --extract $path  $escapedFileToExport /tmp", $output, $returnCode);
+
+                    if(file_exists("/tmp/" . $fileToExport)) {
+                        $book->has_image = true;
+
+                        $image = new Image();
+                        $image->base64 = base64_encode(file_get_contents("/tmp/" . $fileToExport));
+                        $image->book_id = $book->id;
+                        $image->library_id = $book->library_id;
+                        $image->type = "Book";
+                        $image->directory_id = $book->directory_id;
+                        $image->save();
+                        $book->image_id = $image->id;
+
+                        unlink("/tmp/" . $fileToExport);
+                    }
+                }
+
+            }else{
+                try{
+                    $epubParser = Ebook::read($book->path);
+                }catch (\ErrorException $e){
+                    \Log::error("Error reading file: " . $book->path . " - " . $e->getMessage());
+                    $book->has_image_been_tried = true;
+                    $book->save();
+                    continue;
+                }catch (\Exception $e){
+                    \Log::error("Error reading file: " . $book->path . " - " . $e->getMessage());
+                    $book->has_image_been_tried = true;
+                    $book->save();
+                    continue;
+                }
                 $book->has_image_been_tried = true;
-                $book->save();
-                continue;
-            }
-            $book->has_image_been_tried = true;
-            if($epubParser->hasCover()) {
-                $book->has_image = true;
+                if($epubParser->hasCover()) {
+                    $book->has_image = true;
 
-                $image = new Image();
-                $cover =  $epubParser->getCover();
+                    $image = new Image();
+                    $cover =  $epubParser->getCover();
 
-                $image->base64 = $cover->getContents(true);
-                $image->book_id = $book->id;
-                $image->library_id = $book->library_id;
-                $image->type = "Book";
-                $image->directory_id = $book->directory_id;
-                $image->save();
-                $book->image_id = $image->id;
+                    $image->base64 = $cover->getContents(true);
+                    $image->book_id = $book->id;
+                    $image->library_id = $book->library_id;
+                    $image->type = "Book";
+                    $image->directory_id = $book->directory_id;
+                    $image->save();
+                    $book->image_id = $image->id;
 
 
 
                     unset($cover);
-                unset($epubParser);
+                    unset($epubParser);
+                }
             }
+
             $book->save();
 
         }
