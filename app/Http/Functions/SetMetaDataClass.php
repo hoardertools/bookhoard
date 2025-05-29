@@ -5,6 +5,7 @@ namespace App\Http\Functions;
 
 use App\Book;
 
+use App\Log;
 use Kiwilan\Ebook\Ebook;
 use function Symfony\Component\String\s;
 
@@ -15,7 +16,7 @@ class SetMetaDataClass
 
         $meta = [];
 
-
+            Log::log("Setting metadata for book ID: " . $book->id, "Metadata", "info");
             try{
                 $epubParser = Ebook::read($book->path, true);
                 $meta["series"] = $epubParser->getSeries();
