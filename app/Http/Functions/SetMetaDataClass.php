@@ -16,8 +16,9 @@ class SetMetaDataClass
 
         $meta = [];
 
-            Log::log("Setting metadata for book ID: " . $book->id, "Metadata", "info");
+
             try{
+
                 $epubParser = Ebook::read($book->path, true);
                 $meta["series"] = $epubParser->getSeries();
                 $meta["issue"] = $epubParser->getVolume();
