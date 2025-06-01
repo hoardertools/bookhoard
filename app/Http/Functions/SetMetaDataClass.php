@@ -59,7 +59,15 @@ class SetMetaDataClass
                     }
                 }
             }catch (\Exception $e){
-
+                Log::log("Error while parsing metadata for book: " . $book->name . " - " . $e->getMessage(), "Metadata", "error");
+            }catch (\Throwable $e){
+                Log::log("Error while parsing metadata for book: " . $book->name . " - " . $e->getMessage(), "Metadata", "error");
+            }catch (\ErrorException $e){
+                Log::log("Error while parsing metadata for book: " . $book->name . " - " . $e->getMessage(), "Metadata", "error");
+            }catch (\Error $e){
+                Log::log("Error while parsing metadata for book: " . $book->name . " - " . $e->getMessage(), "Metadata", "error");
+            }catch (\ValueError $e) {
+                Log::log("Error while parsing metadata for book: " . $book->name . " - " . $e->getMessage(), "Metadata", "error");
             }
 
         return $meta;
