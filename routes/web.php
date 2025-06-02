@@ -22,29 +22,6 @@ Route::get('/downloadRssFile/{id}/{key}/{filename}', function ($id, $key) {
 
 });
 
-Route::get('/getRssPodcastCover/{id}/{key}', function (Request $request, $id, $key) {
-
-
-    $podcast = \App\Podcast::where("id", "=", $id)->first();
-
-    if($key == $podcast->rss_access_key) {
-        try{
-            return Response::make(base64_decode($podcast->image()->first()->base64), 200, [
-                'Content-Type' => 'image/png', // Adjust the content type if necessary
-                'Content-Disposition' => 'inline', // Ensure the browser renders it as an image
-            ]);
-
-        }catch (\Exception $e){
-            unset($e);
-            $placeholderPath = public_path('/assets/img/Podcast_Placeholder_orig.webp'); // Adjust the path if needed
-            return Response::file($placeholderPath);
-        }
-    }else{
-        return response('Unauthorized.', 401);
-    }
-
-});
-
 //Read permissions
 Route::middleware(['verifyReadPermissions'])->group(function () {
     Route::get('/api/books/{book}/details', function (\App\Book $book) {
@@ -56,6 +33,16 @@ Route::middleware(['verifyReadPermissions'])->group(function () {
     });
     Route::get('/', 'MainController@home')->name('home');
 
+
+    //Redirect /book/{id} to /library/{slug}/directory/{directoryId}/book/{book}
+    Route::get('/book/{id}', function ($id) {
+        $book = \App\Book::findOrFail($id);
+        $directory = \App\Directory::findOrFail($book->directory_id);
+        $library = \App\Library::findOrFail($directory->library_id);
+        return redirect("/library/{$library->slug}/directory/{$directory->id}/book/{$book->id}");
+    })->name('redirectSingleFile');
+    Route::get('/search', 'SearchController@search')->name('search');
+    Route::post('/search', 'SearchController@searchPOST')->name('searchPOST');
     Route::get('/library/{slug}', 'LibraryController@showLibrary');
     Route::get('/library/{slug}/directory/{directoryId}', 'LibraryController@showLibrary');
     Route::get('/library/{slug}/directory/{directory}/book/{book}', 'LibraryController@showBook');

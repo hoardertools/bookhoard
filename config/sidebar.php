@@ -15,6 +15,13 @@ $menu = [
             'url' => '/logCenter',
             'route-name' => 'logCenter'
         ]
+        ,
+        [
+            'icon' => 'fa fa-search',
+            'title' => 'Search',
+            'url' => '/search',
+            'route-name' => 'search'
+        ]
     ]
 ];
 
