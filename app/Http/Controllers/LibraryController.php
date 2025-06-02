@@ -10,6 +10,7 @@ use App\Jobs\RefreshPodcastJob;
 use App\Jobs\RefreshRssJob;
 use App\Library;
 use App\Log;
+use App\Metadata;
 use App\Models\Directory;
 use App\Models\File;
 use App\Podcast;
@@ -50,6 +51,33 @@ class LibraryController extends Controller
             'directory' => $directory,
            ]);
 
+    }
+
+    public function authors(Request $request)
+    {
+        $authors = Metadata::where('key', "=", 'author')
+            ->distinct('value')
+            ->get(['id', 'value']);
+
+        return view('pages.authors', [
+            'authors' => $authors,
+        ]);
+    }
+
+    public function author($id)
+    {
+
+        $author = Metadata::findOrFail($id)->value;
+        $books = Metadata::where('key', '=', 'author')
+            ->where('value', '=', $author)
+            ->with('book')
+            ->get()
+            ->pluck('book');
+
+        return view('pages.author', [
+            'author' => $author,
+            'books' => $books,
+        ]);
     }
 
 }

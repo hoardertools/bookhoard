@@ -9,11 +9,18 @@ $menu = [
 		'url' => '/',
 		'route-name' => 'home'
 	],
+
         [
             'icon' => 'fa fa-notes-medical',
             'title' => 'Log Center',
             'url' => '/logCenter',
             'route-name' => 'logCenter'
+        ],
+        [
+            'icon' => 'fa fa-book',
+            'title' => 'Authors',
+            'url' => '/authors',
+            'route-name' => 'authors'
         ]
         ,
         [

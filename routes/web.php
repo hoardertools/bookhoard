@@ -42,8 +42,12 @@ Route::middleware(['verifyReadPermissions'])->group(function () {
         return redirect("/library/{$library->slug}/directory/{$directory->id}/book/{$book->id}");
     })->name('redirectSingleFile');
     Route::get('/search', 'SearchController@search')->name('search');
+
     Route::post('/search', 'SearchController@searchPOST')->name('searchPOST');
+
     Route::get('/library/{slug}', 'LibraryController@showLibrary');
+    Route::get('/authors/', 'LibraryController@authors');
+    Route::get('/authors/{id}', 'LibraryController@author');
     Route::get('/library/{slug}/directory/{directoryId}', 'LibraryController@showLibrary');
     Route::get('/library/{slug}/directory/{directory}/book/{book}', 'LibraryController@showBook');
 
@@ -57,6 +61,15 @@ Route::middleware(['verifyReadPermissions'])->group(function () {
 
     })->name('getComic');
 
+    // /getComic/id to download the file to the browser
+    Route::get("/getBook/{id}", function ($id) {
+
+        $book = \App\Book::findOrFail($id);
+
+
+        return response()->download( $book->path);
+
+    })->name('getBook');
 
 
     Route::get('/profile', 'ProfileController@profile')->name('profile');

@@ -10,7 +10,7 @@ class Metadata extends Model
 {
 
 
-    public function episode(): BelongsTo
+    public function book(): BelongsTo
     {
         return $this->belongsTo(Book::class);
     }
