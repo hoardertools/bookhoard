@@ -58,24 +58,25 @@
 						<td>{{basename($book->path)}}</td>
 					</tr>
 					<tr>
-						<td>Series</td>
-						<td>{{$book->series}}</td>
+						<td>Path</td>
+						<td>{{$book->path}}</td>
 					</tr>
-					<tr>
-						<td>Title</td>
-						<td>{{$book->title ?? "-"}}</td>
-					</tr>
-					<tr>
-						<td>Issue</td>
-						<td>{{$book->issue ?? "-"}}</td>
-					</tr>
+
 					@foreach($book->otherMeta() as $meta)
 						@if($meta->key != "title")
 							@if($meta->key != "series")
 								@if($meta->key != "issue")
 								<tr>
 									<td>{{ucfirst($meta->key)}}</td>
-									<td>{{$meta->value}}</td>
+									@if($meta->key == "authors")
+										<td>
+											@foreach($meta->value as $author)
+												<a href="/author/{{$author}}">{{$author}}</a>
+											@endforeach
+										</td>
+									@endif
+										<td>{{$meta->value}}</td>
+									@endif
 								</tr>
 							@endif
 								@endif
