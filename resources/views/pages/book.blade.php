@@ -70,16 +70,14 @@
 									<td>{{ucfirst($meta->key)}}</td>
 									@if($meta->key == "authors")
 										<td>
-											@foreach($meta->value as $author)
-												<a href="/author/{{$author}}">{{$author}}</a>
-											@endforeach
+											<a href="/author/{{$meta->id}}">{{$meta->value}}</a>
 										</td>
-									@endif
+									@else
 										<td>{{$meta->value}}</td>
 									@endif
 								</tr>
-							@endif
 								@endif
+							@endif
 						@endif
 					@endforeach
 					</tbody>
