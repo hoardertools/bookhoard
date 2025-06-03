@@ -71,6 +71,26 @@ Route::middleware(['verifyReadPermissions'])->group(function () {
 
     })->name('getBook');
 
+    Route::get("/getBook/{id}/customNamingScheme", function ($id) {
+
+        $book = \App\Book::findOrFail($id);
+
+//Download as filename using Metadata author - title
+        $author = $book->metadata()->where('key', 'author')->first();
+        $title = $book->metadata()->where('key', 'title')->first();
+        $filename = $author ? $author->value : 'Unknown Author';
+        $filename .= ' - ' . ($title ? $title->value : 'Unknown Title') . '.' . pathinfo($book->path, PATHINFO_EXTENSION);
+        $headers = [
+            'Content-Type' => 'application/octet-stream',
+            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+        ];
+        // Return the file as a download response with the custom filename
+        return response()->download($book->path, $filename, $headers);
+
+
+
+    })->name('getBook');
+
 
     Route::get('/profile', 'ProfileController@profile')->name('profile');
     Route::post('/profile', 'ProfileController@updateProfile');
