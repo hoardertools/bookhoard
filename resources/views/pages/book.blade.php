@@ -68,7 +68,7 @@
 								@if($meta->key != "issue")
 								<tr>
 									<td>{{ucfirst($meta->key)}}</td>
-									@if($meta->key == "authors")
+									@if($meta->key == "author")
 										<td>
 											<a href="/author/{{$meta->id}}">{{$meta->value}}</a>
 										</td>
