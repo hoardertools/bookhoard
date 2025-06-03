@@ -70,7 +70,7 @@
 									<td>{{ucfirst($meta->key)}}</td>
 									@if($meta->key == "author")
 										<td>
-											<a href="/author/{{$meta->id}}">{{$meta->value}}</a>
+											<a href="/authors/{{$meta->id}}">{{$meta->value}}</a>
 										</td>
 									@else
 										<td>{{$meta->value}}</td>

@@ -41,8 +41,8 @@
 								<td><a href="/book/{{$book->id}}">{{$book->name}}</a></td>
 								<td>{{\App\Metadata::where("key", "=", "title")->where("book_id", "=", $book->id)->first()->value ?? ""}}</td>
 								<td>{{\App\Metadata::where("key", "=", "series")->where("book_id", "=", $book->id)->first()->value ?? ""}}</td>
-								<td><a href="/getBook/{{$book->id}}" class="btn btn-xs btn-success">Download</a></td>
-								<td><a href="/getBook/{{$book->id}}/customNamingScheme" class="btn btn-xs btn-success">Download v2</a></td>
+								<td><a href="/getBook/{{$book->id}}" class="btn btn-xs btn-success">Download</a>
+								<a href="/getBook/{{$book->id}}/customNamingScheme" class="btn btn-xs btn-success">Download v2</a></td>
 
 
 							</tr>
