@@ -32,9 +32,12 @@ class SetInitialMetaDataJob implements ShouldQueue
 
         foreach($this->library->books()->where("metadata_set", "=", false)->take(1000)->get() as $book) {
 
+            \Illuminate\Support\Facades\Log::info("Setting metadata for book: " . $book->id);
             $metadataManager = new MetadataManager($book);
+            \Illuminate\Support\Facades\Log::info("Getting metadata for book: " . $book->id);
             $metaObject = $metadataManager->setDbMetaData();
 
+            \Illuminate\Support\Facades\Log::info("Setting metadata for book: " . $book->id . " with metadata: " . json_encode($metaObject->metaData));
             foreach($metaObject->metaData as $metadata) {
 
                 if(is_a($metadata, Metadata::class)){
@@ -44,6 +47,7 @@ class SetInitialMetaDataJob implements ShouldQueue
             }
             $book->metadata_set = true;
             $book->save();
+            \Illuminate\Support\Facades\Log::info("Metadata set for book: " . $book->id);
         }
 
         $chuckedMetadata = array_chunk($metaData,10000,true);
